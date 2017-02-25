@@ -1,6 +1,16 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -25,8 +35,43 @@ var CommentList = function (_React$Component) {
         return _possibleConstructorReturn(this, (CommentList.__proto__ || Object.getPrototypeOf(CommentList)).apply(this, arguments));
     }
 
+    _createClass(CommentList, [{
+        key: 'render',
+        value: function render() {
+            var commentNodes = this.props.data.map(function (comment, index) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'table',
+                        null,
+                        _react2.default.createElement(
+                            'tr',
+                            null,
+                            _react2.default.createElement(
+                                'h3',
+                                null,
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: 'javascript:void(0)' },
+                                    comment.author
+                                )
+                            ),
+                            _react2.default.createElement('br', null),
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                comment.text
+                            )
+                        )
+                    )
+                );
+            });
+        }
+    }]);
+
     return CommentList;
-}(React.Component);
+}(_react2.default.Component);
 
 var CommentBox = function (_React$Component2) {
     _inherits(CommentBox, _React$Component2);
@@ -38,35 +83,35 @@ var CommentBox = function (_React$Component2) {
     }
 
     _createClass(CommentBox, [{
-        key: "handleCommentSubmit",
+        key: 'handleCommentSubmit',
         value: function handleCommentSubmit(comment) {
             this.firebaseRefs['data'].push(comment);
         }
     }, {
-        key: "componentWillMount",
+        key: 'componentWillMount',
         value: function componentWillMount() {
             this.bindAsArray(firebase.database().ref('commentsBox'), 'data');
             // Here we bind the component to Firebase and it handles all data updates,
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
-            return React.createElement(
-                "div",
-                { className: "commentBox" },
-                React.createElement(
-                    "h1",
+            return _react2.default.createElement(
+                'div',
+                { className: 'commentBox' },
+                _react2.default.createElement(
+                    'h1',
                     null,
-                    "Comments "
+                    'Comments '
                 ),
-                React.createElement(CommentList, { data: this.state.data }),
-                React.createElement(CommentForm, { onCommentSubmit: this.handleCommentSubmit })
+                _react2.default.createElement(CommentList, { data: this.state.data }),
+                _react2.default.createElement(CommentForm, { onCommentSubmit: this.handleCommentSubmit })
             );
         }
     }]);
 
     return CommentBox;
-}(React.Component);
+}(_react2.default.Component);
 
 var CommentFrom = function (_React$Component3) {
     _inherits(CommentFrom, _React$Component3);
@@ -78,7 +123,7 @@ var CommentFrom = function (_React$Component3) {
     }
 
     _createClass(CommentFrom, [{
-        key: "handleSubmit",
+        key: 'handleSubmit',
         value: function handleSubmit(e) {
             event.preventDefault();
             this.props.onCommentSubmit({
@@ -89,19 +134,19 @@ var CommentFrom = function (_React$Component3) {
             this.refs.text.value = '';
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
-            return React.createElement(
-                "form",
-                { className: "form-group", onSubmit: this.handleSubmit },
-                React.createElement("input", { type: "text", placeholder: "Your name", ref: "author", "class": "form-control" }),
-                React.createElement("input", { type: "text", placeholder: "Say something...", ref: "text", "class": "form-control" }),
-                React.createElement("input", { type: "submit", className: "btn btn-info", value: "Post" })
+            return _react2.default.createElement(
+                'form',
+                { className: 'form-group', onSubmit: this.handleSubmit },
+                _react2.default.createElement('input', { type: 'text', placeholder: 'Your name', ref: 'author', 'class': 'form-control' }),
+                _react2.default.createElement('input', { type: 'text', placeholder: 'Say something...', ref: 'text', 'class': 'form-control' }),
+                _react2.default.createElement('input', { type: 'submit', className: 'btn btn-info', value: 'Post' })
             );
         }
     }]);
 
     return CommentFrom;
-}(React.Component);
+}(_react2.default.Component);
 
-ReactDOM.render(React.createElement(CommentBox, null), document.getElementById('contant'));
+_reactDom2.default.render(_react2.default.createElement(CommentBox, null), document.getElementById('contant'));

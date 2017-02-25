@@ -1,4 +1,5 @@
-
+import React from 'react'
+import ReactDOM  from 'react-dom'
   var config = {
     apiKey: "AIzaSyBkizh0lSv1Azyx2HQXDChkXyn6LXLG29Q",
     authDomain: "react-commit.firebaseapp.com",
@@ -10,7 +11,25 @@
 
 
   class CommentList extends React.Component{
-      
+      render(){
+          var commentNodes = this.props.data.map(function (comment, index){
+               return(
+                   <div>
+                     <table>
+                        <tr>
+                           <h3>
+                            <a href="javascript:void(0)">{comment.author}</a>
+                          </h3>
+                        <br/>
+                            <td>
+                               {comment.text}
+                            </td>
+                        </tr>
+                        </table>
+                   </div>
+               )
+          })
+      }
   }
   class CommentBox extends React.Component{
      
@@ -58,7 +77,7 @@
       
   }
 
-  ReactDOM.render(<CommentBox />,document.getElementById('contant'));
-
-
-
+ReactDOM.render(
+  <CommentBox />,
+  document.getElementById('contant')
+);
